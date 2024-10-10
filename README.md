@@ -9,3 +9,10 @@
 5. react-router
 6. tailwindcss
 7. shadcn/ui
+
+
+## Start mock backend server
+
+```bash
+json-server src/data/db.json --port 3500  
+```

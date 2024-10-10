@@ -11,10 +11,10 @@
         "prefix": ""
     },
     "aliases": {
-        "components": "@components",
-        "utils": "@utils",
-        "features": "@features",
-        "app": "@app",
-        "src": "@src"
+        "components": "src/components",
+        "utils": "src/utils",
+        "features": "src/features",
+        "app": "src/app",
+        "src": "src"
     }
 }
