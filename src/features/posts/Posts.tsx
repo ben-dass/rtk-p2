@@ -11,8 +11,9 @@ import {
 import { Input } from "@components/ui/input.tsx";
 import { Textarea } from "@components/ui/textarea.tsx";
 import { Button } from "@components/ui/button.tsx";
-import { useGetPostsQuery } from "@features/posts/postsSlice.ts";
+import { selectPostIds, useGetPostsQuery } from "@features/posts/postsSlice.ts";
 import { useAppSelector } from "@src/app/store.ts";
+import Post from "@features/posts/Post.tsx";
 
 const formSchema = z.object({
 	title: z.string().min(2).max(50),
@@ -21,7 +22,7 @@ const formSchema = z.object({
 
 const Posts = () => {
 	const { isLoading, isSuccess, isError, error } = useGetPostsQuery({});
-	const orderedPostsIDs = useAppSelector(selectPostIDs);
+	const orderedPostsIDs = useAppSelector(selectPostIds);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -41,7 +42,12 @@ const Posts = () => {
 	} else if (isError) {
 		console.log(error);
 	} else if (isSuccess) {
-		posts = J;
+		posts = orderedPostsIDs.map((postId) => (
+			<Post
+				key={postId}
+				postId={postId}
+			/>
+		));
 	}
 
 	return (
@@ -93,7 +99,7 @@ const Posts = () => {
 
 			<p className="mb-4 mt-12 text-2xl font-bold uppercase">Posts</p>
 			<hr className="-mt-3 mb-5" />
-			{posts}
+			<div className="flex flex-col gap-2">{posts}</div>
 		</section>
 	);
 };
